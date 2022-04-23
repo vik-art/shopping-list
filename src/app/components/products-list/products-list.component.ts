@@ -19,6 +19,7 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initList();
+    this.getTotal();
   }
 
   initList() {
@@ -32,5 +33,14 @@ export class ProductsListComponent implements OnInit {
      this.total += product.price
      this.productsService.total.next(Math.round(this.total));
    })
+  }
+
+  getTotal() {
+    this.productsService.getProducts().subscribe((res) => {
+     res?.map((el) => {
+       this.total += el.price;
+     })
+     this.productsService.total.next(Math.round(this.total))
+    })
   }
 }

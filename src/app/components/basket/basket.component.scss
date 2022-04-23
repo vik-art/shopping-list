@@ -1,0 +1,12 @@
+mat-card {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.product-info, .details {
+    flex-basis: 40%;
+}
+h2 {
+    text-align: center;
+    color: #673ab7;
+}

@@ -8,18 +8,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { PricePipe } from './pipes/price.pipe';
+import { BasketComponent } from './components/basket/basket.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ToolbarComponent,
     ProductsListComponent,
-    PricePipe
+    PricePipe,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,8 @@ import { PricePipe } from './pipes/price.pipe';
     MatIconModule,
     MatButtonModule,
     MatBadgeModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
