@@ -1,4 +1,5 @@
 export interface Enviroment {
     production: boolean,
-    productsUrl: string
+    productsUrl: string,
+    firebaseUrl: string
 }
