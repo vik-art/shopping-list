@@ -19,21 +19,28 @@ export class ProductsService {
   }
 
   addProduct(product: Product):Observable<Product> {
-    return this.http.post<Product>(`${environment.firebaseUrl}/products.json`, product)
+    return this.http.post<Product>(`${environment.firebaseUrl}/products.json`, product);
   }
 
   getProducts(): Observable<Product[] | null>{
     return this.http.get<Product[]>(`${environment.firebaseUrl}/products.json`)
     .pipe(
-      map((key: {[key: string]: any}) => {
-        if(key) {
+      map((response: {[key: string]: any}) => {
+        if(response) {
               return Object
-              .values(key)
+              .keys(response)
+              .map(key => ({
+                ...response[key],
+                id: key
+              }))
           } else {
               return null;
                     }
                 }))
             }
-
+    
+  deleteProduct(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.firebaseUrl}/products/${id}.json`)
+  }
   
   }

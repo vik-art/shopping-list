@@ -1,6 +1,6 @@
 <h2>Basket</h2>
 <hr>
-<mat-dialog-content class="basket-container">
+<div class="basket-container">
     <mat-card *ngFor="let product of products">
                 <div class="product-info">
                     <img src={{product.image}} alt={{product.title}} width="100">
@@ -13,7 +13,8 @@
                 <div class="price-info">
                    <p><b>Price:</b> ${{product.price | price}}</p>
                    <p><b>Rating:</b> {{product.rating.rate}} ({{product.rating.count}} votes)</p>
-                   <button mat-raised-button color="warn">Delete</button>
+                   <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
                 </div>
     </mat-card>
-    </mat-dialog-content>
+    <h2>Total: {{productsService.total | async}}</h2>
+</div>

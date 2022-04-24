@@ -9,23 +9,14 @@ import { BasketComponent } from '../basket/basket.component';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
+  showBasket: boolean = false;
   constructor(
     public productsService: ProductsService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    
   }
-  openDialog() {
-    const dialogRef = this.dialog.open(BasketComponent, {
-      width: '70%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+  
   
 }
