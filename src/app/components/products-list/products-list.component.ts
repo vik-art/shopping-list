@@ -11,13 +11,15 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsListComponent implements OnInit {
 
   products: Array<Product> = [];
+  total: number = 0;
 
   constructor(
-    private productsService: ProductsService
+    public productsService: ProductsService,
   ) { }
 
   ngOnInit(): void {
     this.initList();
+    this.getTotal();
   }
 
   initList() {
@@ -26,10 +28,19 @@ export class ProductsListComponent implements OnInit {
     })
   }
 
-  showDetails(product: Product) {
-    console.log(product)
-  }
   buyItem(product: Product) {
-    console.log(product)
+   this.productsService.addProduct(product).subscribe(() => {
+     this.total += product.price
+     this.productsService.total.next(Math.round(this.total));
+   })
+  }
+
+  getTotal() {
+    this.productsService.getProducts().subscribe((res) => {
+     res?.map((el) => {
+       this.total += el.price;
+     })
+     this.productsService.total.next(Math.round(this.total))
+    })
   }
 }

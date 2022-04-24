@@ -1,0 +1,20 @@
+<h2>Basket</h2>
+<hr>
+<div class="basket-container">
+    <mat-card *ngFor="let product of products">
+                <div class="product-info">
+                    <img src={{product.image}} alt={{product.title}} width="100">
+                        <h3>{{product.title}}</h3>
+                            <small>{{product.category}}</small>
+                </div>
+                <div class="details">
+                    <p>{{product.description}}</p>
+                </div>
+                <div class="price-info">
+                   <p><b>Price:</b> ${{product.price | price}}</p>
+                   <p><b>Rating:</b> {{product.rating.rate}} ({{product.rating.count}} votes)</p>
+                   <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
+                </div>
+    </mat-card>
+    <h2>Total: {{productsService.total | async}}</h2>
+</div>
