@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Product } from 'src/app/common/interfaces/product.interface';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -7,10 +8,11 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './basket.component.html',
   styleUrls: ['./basket.component.scss']
 })
-export class BasketComponent implements OnInit {
+export class BasketComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   total: number = 0;
   @Output() closeBasketWindow = new EventEmitter();
+  unSubscriber = new Subscription();
 
   constructor(
     public productsService: ProductsService
@@ -18,23 +20,28 @@ export class BasketComponent implements OnInit {
 
   ngOnInit(): void {
     this.initProducts(); 
+    this.productsService.total$.subscribe((res) => {
+      this.total = res;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.unSubscriber.unsubscribe();
   }
 
   initProducts() {
-    this.productsService.getProducts().subscribe((res) => {
+  this.unSubscriber.add(this.productsService.getProducts().subscribe((res) => {
       res ? this.products = res : [];
-      res?.map(el => {
-        this.total += el.price;
-      })
-    })
+    }))
   }
 
   onDelete(product: Product) {
+    this.unSubscriber.add(
     this.productsService.deleteProduct(product.id).subscribe(() => {
-     this.products = this.products.filter((item) => item.id !== product.id);
-     this.productsService.total.next(Math.round(this.total - product.price));
-     this.total = this.total - product.price;
-    })
+     this.products = this.products.filter((item) => item.id !== product.id); 
+     this.total = Math.round(this.total - product.price);
+     this.productsService.total$.next(this.total); 
+    })) 
   }
   
   hideBasket() {

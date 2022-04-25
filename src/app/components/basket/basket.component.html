@@ -4,6 +4,7 @@
             <mat-icon (click)="hideBasket()">close</mat-icon>
         </div>
     <h2 class="basket-title">Basket</h2>
+    <div *ngIf="products.length; else noResults" class="basket-products-container">
     <mat-card *ngFor="let product of products">
                     <div class="product-image">
                     <img src={{product.image}} alt={{product.title}}>
@@ -19,5 +20,11 @@
                    <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
                 </div>
     </mat-card>
+    <h2 class="basket-bottom-title">Total: ${{productsService.total$ | async}}</h2>
+    </div>
     </div>
 </div>
+
+<ng-template #noResults>
+    <h3>There are no products in the basket</h3>
+</ng-template>

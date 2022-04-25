@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ToolbarComponent implements OnInit {
   showBasket: boolean = false;
+
   constructor(
     public productsService: ProductsService
   ) { }
@@ -17,9 +18,5 @@ export class ToolbarComponent implements OnInit {
   
   toggleBasket() {
     this.showBasket = !this.showBasket;
-  }
-
-  openBasket() {
-    
   }
 }
