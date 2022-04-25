@@ -8,7 +8,7 @@ import { Product } from '../common/interfaces/product.interface';
   providedIn: 'root'
 })
 export class ProductsService {
-  public total$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public total$: BehaviorSubject<number> = new BehaviorSubject(this.getTotal());
 
   constructor(
     private http: HttpClient
@@ -42,5 +42,16 @@ export class ProductsService {
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.firebaseUrl}/products/${id}.json`)
   }
-  
+
+  getTotal(): any {
+  this.getProducts().subscribe((res) => {
+    if(res) {
+   res?.reduce((prev, curr): any => {
+      this.total$.next(Math.round(curr.price + prev.price));
+    })
+  }else {
+    this.total$.next(0);
   }
+})
+}
+}
