@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { pipe, switchMap } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Product } from 'src/app/common/interfaces/product.interface';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -11,28 +10,34 @@ import { ProductsService } from 'src/app/services/products.service';
 export class BasketComponent implements OnInit {
   products: Product[] = [];
   total: number = 0;
+  @Output() closeBasketWindow = new EventEmitter();
 
   constructor(
     public productsService: ProductsService
   ) { }
 
   ngOnInit(): void {
-    this.initProducts();  
+    this.initProducts(); 
   }
 
   initProducts() {
     this.productsService.getProducts().subscribe((res) => {
       res ? this.products = res : [];
-    })
-    this.productsService.total.subscribe(res => {
-      this.total = res;
+      res?.map(el => {
+        this.total += el.price;
+      })
     })
   }
 
   onDelete(product: Product) {
     this.productsService.deleteProduct(product.id).subscribe(() => {
      this.products = this.products.filter((item) => item.id !== product.id);
-      this.productsService.total.next(Math.round(this.total - product.price));
+     this.productsService.total.next(Math.round(this.total - product.price));
+     this.total = this.total - product.price;
     })
+  }
+  
+  hideBasket() {
+    this.closeBasketWindow.emit();
   }
 }

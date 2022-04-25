@@ -1,13 +1,16 @@
-<h2>Basket</h2>
-<hr>
 <div class="basket-container">
+    <div class="basket-window">
+        <div class="close-icon">
+            <mat-icon (click)="hideBasket()">close</mat-icon>
+        </div>
+    <h2 class="basket-title">Basket</h2>
     <mat-card *ngFor="let product of products">
-                <div class="product-info">
-                    <img src={{product.image}} alt={{product.title}} width="100">
-                        <h3>{{product.title}}</h3>
-                            <small>{{product.category}}</small>
+                    <div class="product-image">
+                    <img src={{product.image}} alt={{product.title}}>
                 </div>
                 <div class="details">
+                    <h3>{{product.title}}</h3>
+                    <small>{{product.category}}</small>
                     <p>{{product.description}}</p>
                 </div>
                 <div class="price-info">
@@ -16,5 +19,5 @@
                    <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
                 </div>
     </mat-card>
-    <h2>Total: {{productsService.total | async}}</h2>
+    </div>
 </div>
