@@ -32,7 +32,7 @@ export class BasketComponent implements OnInit {
   onDelete(product: Product) {
     this.productsService.deleteProduct(product.id).subscribe(() => {
      this.products = this.products.filter((item) => item.id !== product.id);
-     this.productsService.total.next(Math.round(this.total - product.price));
+     this.productsService.total$.next(Math.round(this.total - product.price));
      this.total = this.total - product.price;
     })
   }

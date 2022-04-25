@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, mapTo, Observable, pipe, Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../common/interfaces/product.interface';
 
@@ -8,7 +8,7 @@ import { Product } from '../common/interfaces/product.interface';
   providedIn: 'root'
 })
 export class ProductsService {
-  public total: Subject<number> = new Subject();
+  public total$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(
     private http: HttpClient

@@ -54,11 +54,15 @@ mat-card {
 }
 .basket-title {
     border-bottom: 1px solid #673ab7;
-    font-weight: 700;  
+}
+.basket-bottom-title {
+    margin-top: 20px;
+    border-top: 1px solid #673ab7;
 }
 h2, h3 {
     text-align: center;
     color: #673ab7;
+    font-weight: 700; 
     margin-bottom: 0;
 }
 small {

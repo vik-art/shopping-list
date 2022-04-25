@@ -31,7 +31,7 @@ export class ProductsListComponent implements OnInit {
   buyItem(product: Product) {
    this.productsService.addProduct(product).subscribe(() => {
      this.total += product.price
-     this.productsService.total.next(Math.round(this.total));
+     this.productsService.total$.next(Math.round(this.total));
    })
   }
 
@@ -40,7 +40,7 @@ export class ProductsListComponent implements OnInit {
      res?.map((el) => {
        this.total += el.price;
      })
-     this.productsService.total.next(Math.round(this.total))
+     this.productsService.total$.next(Math.round(this.total))
     })
   }
 }
