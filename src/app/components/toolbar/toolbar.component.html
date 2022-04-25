@@ -1,14 +1,17 @@
 <header>
     <mat-toolbar color="primary">
-     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+     <button mat-icon-button aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
     <span>Shopping List</span>
     <span class="example-spacer"></span>
-    <div class="basket">
+    <div class="basket" (click)="toggleBasket()">
     <mat-icon>shopping_cart</mat-icon>
     <div class="basket-icon">{{productsService.total | async}}</div>
     </div>
   </mat-toolbar>
 </header>
-<app-basket></app-basket>
+<app-basket
+ *ngIf="showBasket"
+ (closeBasketWindow)="toggleBasket()"
+ ></app-basket>

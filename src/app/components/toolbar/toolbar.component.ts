@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ProductsService } from 'src/app/services/products.service';
-import { BasketComponent } from '../basket/basket.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,12 +9,17 @@ import { BasketComponent } from '../basket/basket.component';
 export class ToolbarComponent implements OnInit {
   showBasket: boolean = false;
   constructor(
-    public productsService: ProductsService,
-    public dialog: MatDialog
+    public productsService: ProductsService
   ) { }
 
   ngOnInit() {
   }
   
-  
+  toggleBasket() {
+    this.showBasket = !this.showBasket;
+  }
+
+  openBasket() {
+    
+  }
 }
