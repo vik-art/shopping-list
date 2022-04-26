@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -8,12 +9,24 @@ import { ProductsService } from 'src/app/services/products.service';
 })
 export class ToolbarComponent implements OnInit {
   showBasket: boolean = false;
+  total: number = 0;
 
   constructor(
     public productsService: ProductsService
   ) { }
 
   ngOnInit() {
+    this.getTotal()
+  }
+
+  getTotal(): any {
+    this.productsService.getProducts().subscribe((res) => {
+      res?.reduce((prev, curr): any => {
+        this.total = prev + curr.price;
+        return this.total;
+      }, 0)
+      this.productsService.total$.next(Math.round(this.total))
+  })
   }
   
   toggleBasket() {
