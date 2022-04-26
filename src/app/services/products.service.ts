@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { BehaviorSubject, map, Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 import { Product } from '../common/interfaces/product.interface';
 
@@ -8,7 +10,7 @@ import { Product } from '../common/interfaces/product.interface';
   providedIn: 'root'
 })
 export class ProductsService {
-  public total$: BehaviorSubject<number> = new BehaviorSubject(this.getTotal());
+  public total$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(
     private http: HttpClient
@@ -42,16 +44,4 @@ export class ProductsService {
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.firebaseUrl}/products/${id}.json`)
   }
-
-  getTotal(): any {
-  this.getProducts().subscribe((res) => {
-    if(res) {
-   res?.reduce((prev, curr): any => {
-      this.total$.next(Math.round(curr.price + prev.price));
-    })
-  }else {
-    this.total$.next(0);
-  }
-})
-}
 }

@@ -5,8 +5,8 @@
         </div>
     <h2 class="basket-title">Basket</h2>
     <div *ngIf="products.length; else noResults" class="basket-products-container">
-    <mat-card *ngFor="let product of products">
-                    <div class="product-image">
+        <mat-card *ngFor="let product of products">
+                <div class="product-image">
                     <img src={{product.image}} alt={{product.title}}>
                 </div>
                 <div class="details">
@@ -19,7 +19,7 @@
                    <p><b>Rating:</b> {{product.rating.rate}} ({{product.rating.count}} votes)</p>
                    <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
                 </div>
-    </mat-card>
+        </mat-card>
     <h2 class="basket-bottom-title">Total: ${{productsService.total$ | async}}</h2>
     </div>
     </div>

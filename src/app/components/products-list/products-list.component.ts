@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
 import { Subscription } from 'rxjs';
+
 import { Product } from 'src/app/common/interfaces/product.interface';
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -13,6 +15,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   products: Array<Product> = [];
   total: number = 0;
+
   unSubscriber = new Subscription();
 
   constructor(
@@ -21,7 +24,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initList();
-    this.productsService.total$.subscribe((res) => {
+    this.productsService.total$
+      .subscribe((res) => {
       this.total = Math.round(res);
     })
   }
@@ -31,16 +35,19 @@ export class ProductsListComponent implements OnInit, OnDestroy {
   }
 
   initList() {
-   this.unSubscriber.add(this.productsService.getListOfProducts().subscribe((res) => {
-      this.products = res;
+   this.unSubscriber.add(
+      this.productsService.getListOfProducts()
+        .subscribe((res) => {
+        this.products = res;
     })
    )}
 
   buyItem(product: Product) {
     this.unSubscriber.add(
-   this.productsService.addProduct(product).subscribe(() => {
-    this.total = Math.round(this.total + product.price);
-    this.productsService.total$.next(this.total);
+   this.productsService.addProduct(product)
+      .subscribe(() => {
+        this.total = Math.round(this.total + product.price);
+        this.productsService.total$.next(this.total);
    }))
   }
 }
