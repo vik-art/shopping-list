@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { ProductsService } from 'src/app/services/products.service';
 
@@ -7,9 +8,11 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
   showBasket: boolean = false;
   total: number = 0;
+
+  unSubscriber = new Subscription();
 
   constructor(
     public productsService: ProductsService
@@ -19,14 +22,18 @@ export class ToolbarComponent implements OnInit {
     this.getTotal()
   }
 
+  ngOnDestroy(): void {
+    this.unSubscriber.unsubscribe()
+  }
+
   getTotal(): any {
-    this.productsService.getProducts().subscribe((res) => {
+   this.unSubscriber.add(this.productsService.getProducts().subscribe((res) => {
       res?.reduce((prev, curr): any => {
         this.total = prev + curr.price;
         return this.total;
       }, 0)
       this.productsService.total$.next(Math.round(this.total))
-  })
+  }))
   }
   
   toggleBasket() {
