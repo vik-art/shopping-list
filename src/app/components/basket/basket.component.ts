@@ -65,15 +65,19 @@ add(product: Product, n: number) {
   const item = {
     ...product,
     quantity: product.quantity + n,
-    price: product.price + (product.price / product.quantity)
+    price: Math.round(product.price + (product.price / product.quantity))
   }
+  this.unSubscriber.add(
   this.productsService.updateProduct(item).subscribe((res) => {
     this.products.map((el, index) => {
      if(el.id === res.id) {
         this.products[index] = res;
      }
     })
+  this.total = this.total + (res.price - product.price);
+  this.productsService.total$.next(Math.round(this.total))
   })
+  )
 }
 
 remove(product: Product, n: number) {
@@ -83,17 +87,23 @@ remove(product: Product, n: number) {
     price: product.price - (product.price / product.quantity)
   }
   if(item.quantity === 0) {
+    this.unSubscriber.add(
     this.productsService.deleteProduct(item.id).subscribe(() => {
-      this.products = this.products.filter(el => el.id !== item.id)
-    })
+      this.products = this.products.filter(el => el.id !== item.id);
+      this.total = Math.round(this.total - product.price);
+      this.productsService.total$.next(this.total); 
+    }))
   } else {
+    this.unSubscriber.add(
   this.productsService.updateProduct(item).subscribe((res) => {
     this.products.map((el, index) => {
      if(el.id === res.id) {
         this.products[index] = res;
      }
     })
-  })
+    this.total = this.total - (product.price - res.price);
+  this.productsService.total$.next(Math.round(this.total))
+  }))
 }
 }
 }
