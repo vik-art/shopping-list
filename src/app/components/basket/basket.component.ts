@@ -52,8 +52,8 @@ export class BasketComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.products = this.products
               .filter((item) => item.id !== product.id); 
-          this.total = this.total - Number((product.price).toFixed(2));
-          this.productsService.total$.next(this.total); 
+          this.total = this.total - product.price;
+          this.productsService.total$.next(Number(this.total.toFixed(2))); 
     })) 
   }
   
@@ -74,8 +74,8 @@ add(product: Product, n: number) {
         this.products[index] = res;
      }
     })
-  this.total = this.total + Number((res.price - product.price).toFixed(2));
-  this.productsService.total$.next(this.total)
+  this.total = this.total + res.price - product.price;
+  this.productsService.total$.next(Number(this.total.toFixed(2)))
   })
   )
 }
@@ -90,8 +90,8 @@ remove(product: Product, n: number) {
     this.unSubscriber.add(
     this.productsService.deleteProduct(item.id).subscribe(() => {
       this.products = this.products.filter(el => el.id !== item.id);
-      this.total = this.total - Number(product.price.toFixed(2));
-      this.productsService.total$.next(this.total); 
+      this.total = this.total - product.price;
+      this.productsService.total$.next(Number(this.total.toFixed(2))); 
     }))
   } else {
     this.unSubscriber.add(
