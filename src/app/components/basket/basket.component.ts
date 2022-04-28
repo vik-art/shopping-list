@@ -52,7 +52,7 @@ export class BasketComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.products = this.products
               .filter((item) => item.id !== product.id); 
-          this.total = Math.round(this.total - product.price);
+          this.total = Math.floor(this.total - product.price);
           this.productsService.total$.next(this.total); 
     })) 
   }
@@ -65,7 +65,7 @@ add(product: Product, n: number) {
   const item = {
     ...product,
     quantity: product.quantity + n,
-    price: Math.round(product.price + (product.price / product.quantity))
+    price: product.price + Math.floor((product.price / product.quantity))
   }
   this.unSubscriber.add(
   this.productsService.updateProduct(item).subscribe((res) => {
@@ -75,7 +75,7 @@ add(product: Product, n: number) {
      }
     })
   this.total = this.total + (res.price - product.price);
-  this.productsService.total$.next(Math.round(this.total))
+  this.productsService.total$.next(Math.floor(this.total))
   })
   )
 }
@@ -84,13 +84,13 @@ remove(product: Product, n: number) {
   const item = {
     ...product,
     quantity: product.quantity - n,
-    price: product.price - (product.price / product.quantity)
+    price: product.price - Math.floor((product.price / product.quantity))
   }
   if(item.quantity === 0) {
     this.unSubscriber.add(
     this.productsService.deleteProduct(item.id).subscribe(() => {
       this.products = this.products.filter(el => el.id !== item.id);
-      this.total = Math.round(this.total - product.price);
+      this.total = this.total - Math.floor(product.price);
       this.productsService.total$.next(this.total); 
     }))
   } else {
@@ -102,7 +102,7 @@ remove(product: Product, n: number) {
      }
     })
     this.total = this.total - (product.price - res.price);
-  this.productsService.total$.next(Math.round(this.total))
+  this.productsService.total$.next(Math.floor(this.total))
   }))
 }
 }
