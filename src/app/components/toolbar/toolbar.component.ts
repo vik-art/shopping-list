@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.total = prev + curr.price;
         return this.total;
       }, 0)
-      this.productsService.total$.next(Math.round(this.total))
+      this.productsService.total$.next(Math.floor(this.total))
   }))
   }
   
