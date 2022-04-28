@@ -52,7 +52,7 @@ export class BasketComponent implements OnInit, OnDestroy {
         .subscribe(() => {
           this.products = this.products
               .filter((item) => item.id !== product.id); 
-          this.total = Math.floor(this.total - product.price);
+          this.total = this.total - Number((product.price).toFixed(2));
           this.productsService.total$.next(this.total); 
     })) 
   }
@@ -65,17 +65,18 @@ add(product: Product, n: number) {
   const item = {
     ...product,
     quantity: product.quantity + n,
-    price: product.price + Math.floor((product.price / product.quantity))
+    price: product.price + (product.price / product.quantity)
   }
   this.unSubscriber.add(
   this.productsService.updateProduct(item).subscribe((res) => {
+    console.log(res)
     this.products.map((el, index) => {
      if(el.id === res.id) {
         this.products[index] = res;
      }
     })
-  this.total = this.total + (res.price - product.price);
-  this.productsService.total$.next(Math.floor(this.total))
+  this.total = this.total + Number((res.price - product.price).toFixed(2));
+  this.productsService.total$.next(this.total)
   })
   )
 }
@@ -84,13 +85,13 @@ remove(product: Product, n: number) {
   const item = {
     ...product,
     quantity: product.quantity - n,
-    price: product.price - Math.floor((product.price / product.quantity))
+    price: product.price - (product.price / product.quantity)
   }
   if(item.quantity === 0) {
     this.unSubscriber.add(
     this.productsService.deleteProduct(item.id).subscribe(() => {
       this.products = this.products.filter(el => el.id !== item.id);
-      this.total = this.total - Math.floor(product.price);
+      this.total = this.total - Number(product.price.toFixed(2));
       this.productsService.total$.next(this.total); 
     }))
   } else {
@@ -102,7 +103,7 @@ remove(product: Product, n: number) {
      }
     })
     this.total = this.total - (product.price - res.price);
-  this.productsService.total$.next(Math.floor(this.total))
+  this.productsService.total$.next(Number(this.total.toFixed(2)))
   }))
 }
 }
