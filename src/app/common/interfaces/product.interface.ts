@@ -5,10 +5,15 @@ export interface Product {
     image: string,
     price: number,
     title: string,
+    quantity: number,
     rating: Rate
 }
 
 export interface Rate {
         rate: number,
         count: number
+}
+
+export interface ProductResponse {
+    name: string
 }

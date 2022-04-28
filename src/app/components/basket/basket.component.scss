@@ -47,6 +47,12 @@ mat-card {
 }
 .price-info {
     flex-basis: 20%;
+    text-align: center;
+    &>p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 .details {
     flex-basis: 55%;

@@ -7,7 +7,7 @@
     <span class="example-spacer"></span>
     <div class="basket" (click)="toggleBasket()">
     <mat-icon>shopping_cart</mat-icon>
-    <div *ngIf="productsService.total$ | async" class="basket-icon">{{productsService.total$ | async}}</div>
+    <div *ngIf="productsService.total$ | async" class="basket-icon">{{productsService.total$ | async }}</div>
     </div>
   </mat-toolbar>
 </header>

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, mapTo, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { Product } from '../common/interfaces/product.interface';
+import { Product, ProductResponse } from '../common/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,17 @@ export class ProductsService {
   }
 
   addProduct(product: Product):Observable<Product> {
-    return this.http.post<Product>(`${environment.firebaseUrl}/products.json`, product);
+    const productItem = {
+      ...product,
+      quantity: 1,
+    }
+    return this.http.post<Product>(`${environment.firebaseUrl}/products.json`, productItem)
+    .pipe(map((response: any) => {
+      return {
+          ...product,
+          id: response.name
+      }
+}))
   }
 
   getProducts(): Observable<Product[] | null>{
@@ -43,5 +53,9 @@ export class ProductsService {
     
   deleteProduct(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.firebaseUrl}/products/${id}.json`)
+  }
+
+  updateProduct(product: Product):Observable<Product> {
+    return this.http.patch<Product>(`${environment.firebaseUrl}/products/${product.id}.json`, product)
   }
 }

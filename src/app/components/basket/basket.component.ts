@@ -14,6 +14,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class BasketComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   total: number = 0;
+  quantity: number = 1;
 
   @Output() closeBasketWindow = new EventEmitter();
 
@@ -59,4 +60,40 @@ export class BasketComponent implements OnInit, OnDestroy {
   hideBasket() {
     this.closeBasketWindow.emit();
   }
+
+add(product: Product, n: number) {
+  const item = {
+    ...product,
+    quantity: product.quantity + n,
+    price: product.price + (product.price / product.quantity)
+  }
+  this.productsService.updateProduct(item).subscribe((res) => {
+    this.products.map((el, index) => {
+     if(el.id === res.id) {
+        this.products[index] = res;
+     }
+    })
+  })
+}
+
+remove(product: Product, n: number) {
+  const item = {
+    ...product,
+    quantity: product.quantity - n,
+    price: product.price - (product.price / product.quantity)
+  }
+  if(item.quantity === 0) {
+    this.productsService.deleteProduct(item.id).subscribe(() => {
+      this.products = this.products.filter(el => el.id !== item.id)
+    })
+  } else {
+  this.productsService.updateProduct(item).subscribe((res) => {
+    this.products.map((el, index) => {
+     if(el.id === res.id) {
+        this.products[index] = res;
+     }
+    })
+  })
+}
+}
 }
