@@ -30,9 +30,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
    this.unSubscriber.add(this.productsService.getProducts().subscribe((res) => {
       res?.reduce((prev, curr): any => {
         this.total = prev + curr.price;
-        return Number(this.total.toFixed(2))
+        return this.total;
       }, 0)
-      this.productsService.total$.next(this.total)
+      this.productsService.total$.next(Number(this.total.toFixed(2)))
   }))
   }
   
