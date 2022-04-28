@@ -15,12 +15,17 @@
                     <p>{{product.description}}</p>
                 </div>
                 <div class="price-info">
+                    <p><b>Quantity:</b> 
+                        <button (click)="add(product, 1)"><mat-icon>add_circle_outline</mat-icon></button> 
+                        {{product.quantity}} 
+                        <button (click)="remove(product, 1)"><mat-icon>remove_circle_outline</mat-icon></button>
+                    </p>
                    <p><b>Price:</b> ${{product.price | price}}</p>
                    <p><b>Rating:</b> {{product.rating.rate}} ({{product.rating.count}} votes)</p>
                    <button mat-raised-button color="warn" (click)="onDelete(product)">Delete</button>
                 </div>
         </mat-card>
-    <h2 class="basket-bottom-title">Total: ${{productsService.total$ | async}}</h2>
+    <h2 class="basket-bottom-title">Total: ${{productsService.total$ | async }}</h2>
     </div>
     </div>
 </div>
