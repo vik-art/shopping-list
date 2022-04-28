@@ -69,7 +69,6 @@ add(product: Product, n: number) {
   }
   this.unSubscriber.add(
   this.productsService.updateProduct(item).subscribe((res) => {
-    console.log(res)
     this.products.map((el, index) => {
      if(el.id === res.id) {
         this.products[index] = res;
