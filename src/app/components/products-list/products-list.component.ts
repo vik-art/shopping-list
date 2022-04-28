@@ -46,8 +46,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.unSubscriber.add(
    this.productsService.addProduct(product)
       .subscribe(() => {
-        this.total = this.total + product.price;
-        this.productsService.total$.next(Math.floor(this.total));
+        this.total = this.total + Math.floor(product.price);
+        this.productsService.total$.next(this.total);
    }))
   }
 }
