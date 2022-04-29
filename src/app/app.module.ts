@@ -8,7 +8,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
-import {MatDialogModule} from '@angular/material/dialog';
 
 
 import { AppComponent } from './app.component';
@@ -16,6 +15,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { PricePipe } from './pipes/price.pipe';
 import { BasketComponent } from './components/basket/basket.component';
+import { ProductPageComponent } from './components/product-page/product-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { BasketComponent } from './components/basket/basket.component';
     ToolbarComponent,
     ProductsListComponent,
     PricePipe,
-    BasketComponent
+    BasketComponent,
+    ProductPageComponent
   ],
   imports: [
     BrowserModule,
@@ -33,8 +34,7 @@ import { BasketComponent } from './components/basket/basket.component';
     MatIconModule,
     MatButtonModule,
     MatBadgeModule,
-    MatCardModule,
-    MatDialogModule
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

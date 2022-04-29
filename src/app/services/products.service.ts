@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, mapTo, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { Product, ProductResponse } from '../common/interfaces/product.interface';
+import { Product } from '../common/interfaces/product.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class ProductsService {
 }))
   }
 
-  getProducts(): Observable<Product[] | null>{
+  getProducts(): Observable<Product[]>{
     return this.http.get<Product[]>(`${environment.firebaseUrl}/products.json`)
     .pipe(
       map((response: {[key: string]: any}) => {
@@ -46,7 +46,7 @@ export class ProductsService {
                 id: key
               }))
           } else {
-              return null;
+              return [];
                     }
                 }))
             }

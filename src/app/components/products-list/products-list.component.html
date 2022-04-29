@@ -10,6 +10,15 @@
               <button mat-button color="primary" (click)="buyItem(product)">
                   <mat-icon>shopping_cart</mat-icon> Buy
                 </button>
+                <button mat-button color="primary" (click)="showItem(product)">
+                  <mat-icon>remove_red_eye</mat-icon> Show details
+                </button>
         </mat-card-actions>
     </mat-card>
 </div>
+<app-product-page 
+      *ngIf="openProductPage"
+      [product]="product"
+      (closeProductWindow)="onClose()"
+      (buyItem)="buyItem(product)"
+      ></app-product-page>

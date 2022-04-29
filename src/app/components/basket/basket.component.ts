@@ -51,9 +51,8 @@ export class BasketComponent implements OnInit, OnDestroy {
     this.productsService.deleteProduct(product.id)
         .subscribe(() => {
           this.products = this.products
-              .filter((item) => item.id !== product.id); 
-          this.total = this.total - product.price;
-          this.productsService.total$.next(Number(this.total.toFixed(2))); 
+              .filter((item) => item.id !== product.id);
+              this.productsService.total$.next(this.total - product.price); 
     })) 
   }
   
@@ -74,8 +73,7 @@ add(product: Product, n: number) {
         this.products[index] = res;
      }
     })
-  this.total = this.total + res.price - product.price;
-  this.productsService.total$.next(Number(this.total.toFixed(2)))
+  this.productsService.total$.next(this.total + res.price - product.price);
   })
   )
 }
@@ -90,8 +88,7 @@ remove(product: Product, n: number) {
     this.unSubscriber.add(
     this.productsService.deleteProduct(item.id).subscribe(() => {
       this.products = this.products.filter(el => el.id !== item.id);
-      this.total = this.total - product.price;
-      this.productsService.total$.next(Number(this.total.toFixed(2))); 
+      this.productsService.total$.next(this.total - product.price); 
     }))
   } else {
     this.unSubscriber.add(
@@ -101,8 +98,7 @@ remove(product: Product, n: number) {
         this.products[index] = res;
      }
     })
-    this.total = this.total - (product.price - res.price);
-  this.productsService.total$.next(Number(this.total.toFixed(2)))
+  this.productsService.total$.next(this.total - (product.price - res.price))
   }))
 }
 }
