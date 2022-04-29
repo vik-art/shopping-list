@@ -59,4 +59,8 @@ showItem(product: Product) {
 onClose() {
   this.openProductPage = false;
 }
+addToBasket(product: Product) {
+  this.buyItem(product);
+  this.onClose();
+}
 }

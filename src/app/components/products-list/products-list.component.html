@@ -20,5 +20,5 @@
       *ngIf="openProductPage"
       [product]="product"
       (closeProductWindow)="onClose()"
-      (buyItem)="buyItem(product)"
+      (buyItem)="addToBasket(product)"
       ></app-product-page>
