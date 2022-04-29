@@ -19,4 +19,6 @@
 <app-product-page 
       *ngIf="openProductPage"
       [product]="product"
-      (closeProductWindow)="onClose()"></app-product-page>
+      (closeProductWindow)="onClose()"
+      (buyItem)="buyItem(product)"
+      ></app-product-page>

@@ -5,8 +5,12 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 
 export class PricePipe implements PipeTransform{
-    transform(value: number) {
+    transform(value: number | null) {
+        if(value) {
         return Number((value).toFixed(2));
+        } else {
+            return 0;
+        }
     }
     
 }

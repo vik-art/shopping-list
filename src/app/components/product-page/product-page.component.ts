@@ -9,6 +9,7 @@ import { Product } from 'src/app/common/interfaces/product.interface';
 export class ProductPageComponent implements OnInit {
   @Input() product!: Product;
   @Output() closeProductWindow = new EventEmitter();
+  @Output() buyItem = new EventEmitter();
 
   constructor() { }
 
@@ -19,4 +20,7 @@ export class ProductPageComponent implements OnInit {
     this.closeProductWindow.emit()
   }
 
+  buy(product: Product) {
+  this.buyItem.emit(product)
+}
 }

@@ -5,27 +5,30 @@
         @include dialog-container;
     &-card {
         @include dialog-window;
-        height: 550px;
+        height: 400px;
         padding: 30px;
         &-details {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: space-around;        
         width: 100%;
         &-image {
-            flex-basis: 45%;
-            height: 100%;
+            flex-basis: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             img {
-                display: block;
-                object-fit: fill;
-                width: 100%;
+                max-width: 100%;
+                block-size: auto;
+                aspect-ratio: 2/1;
+                object-fit: contain;
             }
         }
         &-text {
             flex-basis: 45%;
+            h1 {
+                color: #673ab7;
+                font-weight: 700;
+            }
         }
     }
     }
@@ -33,4 +36,5 @@
 }
 .close-icon {
     text-align: end;
+    cursor: pointer;
 }

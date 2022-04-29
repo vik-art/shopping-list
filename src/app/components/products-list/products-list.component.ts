@@ -28,7 +28,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.initList();
     this.productsService.total$
       .subscribe((res) => {
-      this.total = Number(res.toFixed(2));
+      this.total = res;
     })
   }
 
@@ -48,14 +48,13 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     this.unSubscriber.add(
    this.productsService.addProduct(product)
       .subscribe(() => {
-        this.total = this.total + Number(product.price.toFixed(2));
+        this.total = this.total + product.price;
         this.productsService.total$.next(this.total);
    }))
   }
 showItem(product: Product) {
   this.openProductPage = true;
   this.product = product;
-  console.log(this.product)
 }
 onClose() {
   this.openProductPage = false;
