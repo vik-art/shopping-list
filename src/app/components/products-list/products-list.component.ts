@@ -15,6 +15,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   products: Array<Product> = [];
   total: number = 0;
+  openProductPage: boolean = false;
+  product!: Product;
 
   unSubscriber = new Subscription();
 
@@ -50,4 +52,12 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         this.productsService.total$.next(this.total);
    }))
   }
+showItem(product: Product) {
+  this.openProductPage = true;
+  this.product = product;
+  console.log(this.product)
+}
+onClose() {
+  this.openProductPage = false;
+}
 }
